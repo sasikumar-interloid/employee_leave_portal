@@ -1,0 +1,26 @@
+<% content_for :title, "Unlock Account" %>
+
+<% card_content = capture do %>
+  <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post, class: "mt-8 space-y-5" }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <div>
+      <%= f.label :email, class: "text-sm font-semibold text-slate-700" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "mt-2 block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-teal-600 focus:ring-4 focus:ring-teal-600/15", placeholder: "you@company.com" %>
+    </div>
+
+    <div>
+      <%= f.submit "Resend unlock instructions", class: "inline-flex w-full items-center justify-center rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-900/15" %>
+    </div>
+  <% end %>
+
+  <%= render "devise/shared/links" %>
+<% end %>
+
+<%= render "devise/shared/auth_frame",
+           eyebrow: "Account unlock",
+           title: "Unlock your access",
+           description: "Request a new unlock email to regain access to the portal.",
+           aside_title: "Recovery flows should feel just as polished.",
+           aside_body: "When access issues happen, users still need a clear path back into the system without escalating to manual admin work.",
+           card_content: card_content %>

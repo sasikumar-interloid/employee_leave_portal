@@ -1,0 +1,27 @@
+<section class="grid w-full max-w-5xl gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
+  <div class="relative overflow-hidden rounded-[2rem] bg-slate-900 px-6 py-8 text-slate-50 shadow-[0_30px_80px_rgba(15,23,42,0.18)] sm:px-8 sm:py-10 lg:px-10 lg:py-12">
+    <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
+
+    <p class="text-xs font-semibold uppercase tracking-[0.3em] text-teal-200">Employee Leave Portal</p>
+    <h1 class="mt-4 text-4xl leading-tight font-['Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',Georgia,serif] sm:text-5xl"><%= aside_title %></h1>
+    <p class="mt-4 max-w-xl text-sm leading-7 text-slate-300 sm:text-base"><%= aside_body %></p>
+
+    <div class="mt-8 flex flex-wrap gap-3">
+      <span class="rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-100 backdrop-blur">Leave balances</span>
+      <span class="rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-100 backdrop-blur">Approval flow</span>
+      <span class="rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-100 backdrop-blur">Status tracking</span>
+    </div>
+  </div>
+
+  <div class="rounded-[2rem] border border-white/70 bg-white/85 p-6 shadow-[0_24px_70px_rgba(15,23,42,0.08)] backdrop-blur sm:p-8">
+    <div class="space-y-3">
+      <p class="text-xs font-semibold uppercase tracking-[0.28em] text-teal-700"><%= eyebrow %></p>
+      <div class="space-y-2">
+        <h2 class="text-3xl leading-tight text-slate-950 font-['Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',Georgia,serif] sm:text-[2.2rem]"><%= title %></h2>
+        <p class="text-sm leading-7 text-slate-600"><%= description %></p>
+      </div>
+    </div>
+
+    <%= card_content %>
+  </div>
+</section>

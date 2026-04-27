@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Employee Leave Portal" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Employee Leave Portal">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="bg-stone-100 text-slate-900 antialiased" style="background-image: radial-gradient(circle at top, rgba(20, 184, 166, 0.16), transparent 34%), linear-gradient(180deg, #fffdf8 0%, #f3f4f6 100%);">
+    <div class="relative isolate min-h-screen overflow-hidden">
+      <div class="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.08),_transparent_65%)]"></div>
+      <div class="pointer-events-none absolute -left-16 top-24 h-56 w-56 rounded-full bg-amber-200/40 blur-3xl"></div>
+      <div class="pointer-events-none absolute -right-10 bottom-16 h-64 w-64 rounded-full bg-teal-200/50 blur-3xl"></div>
+
+      <div class="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 py-6 sm:px-6 lg:px-8">
+        <% if notice.present? || alert.present? %>
+          <div class="mx-auto w-full max-w-2xl space-y-3 pt-2">
+            <% if notice.present? %>
+              <p class="rounded-2xl border border-emerald-200 bg-emerald-50/90 px-4 py-3 text-sm font-medium text-emerald-900 shadow-sm backdrop-blur"><%= notice %></p>
+            <% end %>
+
+            <% if alert.present? %>
+              <p class="rounded-2xl border border-rose-200 bg-rose-50/90 px-4 py-3 text-sm font-medium text-rose-900 shadow-sm backdrop-blur"><%= alert %></p>
+            <% end %>
+          </div>
+        <% end %>
+
+        <main class="flex flex-1 items-center justify-center py-10">
+          <%= yield %>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
