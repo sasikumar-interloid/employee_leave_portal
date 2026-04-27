@@ -19,9 +19,4 @@
     <%= link_to "Resend unlock instructions", new_unlock_path(resource_name), class: "text-sm font-medium text-teal-700 transition hover:text-teal-900" %>
   <% end %>
 
-  <%- if devise_mapping.omniauthable? %>
-    <%- resource_class.omniauth_providers.each do |provider| %>
-      <%= button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), class: "inline-flex items-center justify-center rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50", data: { turbo: false } %>
-    <% end %>
-  <% end %>
 </div>

@@ -1,37 +1,64 @@
+<% content_for :title, "Login" %>
+<% content_for :full_width_auth, true %>
+<% content_for :hide_footer, true %>
 
-<% content_for :title, "Log In" %>
+<section class="mx-auto sm:w-[40%] md:w-[40%] lg:2xl:w-[45%]   p-6 md:p-8 rounded-[8px] bg-white shadow-[0_28px_80px_rgba(15,23,42,0.08)]">
+  <div class="flex items-center px-3 py-4 sm:px-4 lg:px-6 lg:py-6">
+    <div class="mx-auto">
+      <h1 class="font-semibold text-2xl text-center">Welcome back</h1>
+      <p class="mt-4 text-sm leading-7 lx:leading-2">
+        Sign in to continue managing leave requests, balances, and approvals.
+      </p>  
 
-<% card_content = capture do %>
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "mt-8 space-y-5" }) do |f| %>
-    <div>
-      <%= f.label :email, class: "text-sm font-semibold text-slate-700" %>
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "mt-2 block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-teal-600 focus:ring-4 focus:ring-teal-600/15", placeholder: "you@company.com" %>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "mt-10 space-y-6", data: { controller: "password-visibility" } }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+
+        <div>
+          <%= f.label :email, "Email address", class: "text-sm font-medium" %>
+          <%= f.email_field :email,
+                            autofocus: true,
+                            placeholder: "Enter your email",
+                            class: "mt-2 w-full rounded-[8px] border border-slate-200 px-4 py-3.5 text-sm text-slate-900 outline-none transition focus:border-[#44652d] focus:ring-4 focus:ring-[#44652d]/10" %>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between gap-4">
+            <%= f.label :password, class: "text-sm font-medium text-slate-900" %>
+            <%= link_to "Forgot password?", new_password_path(resource_name), class: "text-sm font-medium text-[#44652d]" %>
+          </div>
+          <%= f.password_field :password,
+                               placeholder: "Enter your password",
+                               data: { password_visibility_target: "input" },
+                               class: "mt-2 w-full rounded-[8px] border border-slate-200 px-4 py-3.5 text-sm text-slate-900 outline-none transition focus:border-[#44652d] focus:ring-4 focus:ring-[#44652d]/10" %>
+        </div>
+
+        <div class="flex">
+            <label class="flex items-center gap-3 text-sm">
+            <input type="checkbox"
+                  class="h-4 w-4 rounded"
+                  data-action="password-visibility#toggle">
+            <span data-password-visibility-target="toggleLabel">Show password</span>
+          </label>
+
+          <% if devise_mapping.rememberable? %>
+            <label class="flex items-center gap-3 text-sm ml-auto">
+              <%= f.check_box :remember_me, class: "h-4 w-4 rounded " %>
+              <span>Remember me</span>
+            </label>
+          <% end %>
+        </div>
+        
+
+        <%= f.submit "Login", class: "mt-2 inline-flex w-full items-center justify-center rounded-[8px] bg-[#44652d] px-4 py-3.5 text-sm font-semibold text-white transition hover:bg-[#365123] focus:outline-none focus:ring-4 focus:ring-[#44652d]/20" %>
+      <% end %>
+
+      <div class="mt-8 text-center text-sm text-slate-600">
+        <% if devise_mapping.registerable? %>
+          Don't have an account?
+          <%= link_to "Sign up", new_registration_path(resource_name), class: "font-semibold text-[#44652d] hover:text-[#31481f]" %>
+        <% end %>
+      </div>
     </div>
+  </div>
 
-    <div>
-      <%= f.label :password, class: "text-sm font-semibold text-slate-700" %>
-      <%= f.password_field :password, autocomplete: "current-password", class: "mt-2 block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-teal-600 focus:ring-4 focus:ring-teal-600/15", placeholder: "Enter your password" %>
-    </div>
-
-    <% if devise_mapping.rememberable? %>
-      <label class="flex items-center gap-3 text-sm font-medium text-slate-600">
-        <%= f.check_box :remember_me, class: "h-4 w-4 rounded border-slate-300 text-slate-900 focus:ring-teal-600/30" %>
-        <span>Remember me on this device</span>
-      </label>
-    <% end %>
-
-    <div>
-      <%= f.submit "Log in", class: "inline-flex w-full items-center justify-center rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-900/15" %>
-    </div>
-  <% end %>
-
-  <%= render "devise/shared/links" %>
-<% end %>
-
-<%= render "devise/shared/auth_frame",
-           eyebrow: "Secure access",
-           title: "Log in",
-           description: "Use your account to review leave balances, submit requests, and track approvals in one place.",
-           aside_title: "Keep every leave request moving.",
-           aside_body: "A single portal for employees and managers keeps balances accurate, handoffs visible, and approvals out of the inbox.",
-           card_content: card_content %>
+</section>
