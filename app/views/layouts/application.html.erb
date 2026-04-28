@@ -11,28 +11,56 @@
 
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="apple-touch-icon" href="/icon.png">
+    <%= favicon_link_tag "favicon.png" %>
 
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-[#f5f5f3] text-slate-900">
+  <body>
 
    
     <div class="mx-auto flex min-h-screen max-w-6xl flex-col px-4 py-6">
 
       <% if notice.present? || alert.present? %>
-        <div class="mx-auto w-full max-w-xl space-y-3 mb-4">
-
+        <div class="pointer-events-none fixed right-4 top-4 z-50 flex w-full max-w-sm flex-col gap-3 sm:right-6 sm:top-6">
           <% if notice.present? %>
-            <div class="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800 shadow-sm">
-              <%= notice %>
+            <div class="pointer-events-auto rounded-md border border-green-100 bg-green-50 p-4 text-sm shadow-sm"
+                role="alert"
+                data-controller="auto-dismiss"
+                data-auto-dismiss-delay-value="4000">
+                <div class="flex items-center gap-2.5 font-medium text-green-900">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="size-[18px] fill-current overflow-visible" viewBox="0 0 330 330"
+                      aria-hidden="true">
+                      <path
+                        d="M165 0C74.019 0 0 74.019 0 165s74.019 165 165 165 165-74.019 165-165S255.981 0 165 0m0 300c-74.44 0-135-60.561-135-135S90.56 30 165 30s135 60.561 135 135-60.561 135-135 135"
+                        data-original="#000000" />
+                      <path
+                        d="m226.872 106.664-84.854 84.853-38.89-38.891c-5.857-5.857-15.355-5.858-21.213-.001-5.858 5.858-5.858 15.355 0 21.213l49.496 49.498a15 15 0 0 0 10.606 4.394h.001c3.978 0 7.793-1.581 10.606-4.393l95.461-95.459c5.858-5.858 5.858-15.355 0-21.213s-15.355-5.859-21.213-.001"
+                        data-original="#000000" />
+                  </svg>
+                  <p><%= notice %></p>
+                </div>
             </div>
           <% end %>
 
           <% if alert.present? %>
-            <div class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-800 shadow-sm">
-              <%= alert %>
+            <div class="pointer-events-auto rounded-md border border-red-100 bg-red-50 p-4 text-sm shadow-sm"
+                role="alert"
+                data-controller="auto-dismiss"
+                data-auto-dismiss-delay-value="4000">
+                <div class="flex items-center gap-2.5 font-medium text-red-700">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="size-[18px] fill-current overflow-visible" viewBox="0 0 512 512"
+                      aria-hidden="true">
+                      <path
+                        d="M256 0C114.508 0 0 114.497 0 256c0 141.493 114.497 256 256 256 141.492 0 256-114.497 256-256C512 114.507 397.503 0 256 0m0 472c-119.384 0-216-96.607-216-216 0-119.385 96.607-216 216-216 119.384 0 216 96.607 216 216 0 119.385-96.607 216-216 216"
+                        data-original="#000000" />
+                      <path
+                        d="M343.586 315.302 284.284 256l59.302-59.302c7.81-7.81 7.811-20.473.001-28.284-7.812-7.811-20.475-7.81-28.284 0L256 227.716l-59.303-59.302c-7.809-7.811-20.474-7.811-28.284 0s-7.81 20.474.001 28.284L227.716 256l-59.302 59.302c-7.811 7.811-7.812 20.474-.001 28.284 7.813 7.812 20.476 7.809 28.284 0L256 284.284l59.303 59.302c7.808 7.81 20.473 7.811 28.284 0s7.81-20.474-.001-28.284"
+                        data-original="#000000" />
+                  </svg>
+                  <p><%= alert %></p>
+                </div>
             </div>
           <% end %>
 
@@ -45,7 +73,7 @@
             <%= yield %>
           </div>
         <% else %>
-          <div class="w-full max-w-md rounded-2xl p-6 sm:p-8">
+          <div class="w-full max-w-md rounded-md p-6 sm:p-8">
             <%= yield %>
           </div>
         <% end %>

@@ -2,11 +2,11 @@
 <% content_for :full_width_auth, true %>
 <% content_for :hide_footer, true %>
 
-<section class="mx-auto w-full max-w-3xl overflow-hidden rounded-[2rem] bg-white shadow-[0_28px_80px_rgba(15,23,42,0.08)] lg:grid lg:min-h-[560px]">
-  <div class="flex items-center px-3 py-4 sm:px-4 lg:px-6 lg:py-6">
-    <div class="mx-auto w-full max-w-md">
-      <h1 class="text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">Create a new password</h1>
-      <p class="mt-4 text-base leading-7 text-slate-500">
+<section class="mx-auto 2xl:w-[40%] xl:w-[50%] lg:w-[50%] md:w-[60%] sm:w-[80%] overflow-hidden rounded-md bg-white shadow-xl">
+  <div class="flex items-center px-3 py-4 sm:px-4 lg:px-8 lg:py-8">
+    <div class="mx-auto w-full">
+      <h1 class="text-lg font-semibold tracking-tight">Create a new password</h1>
+      <p class="mt-4 text-sm leading-7">
         Choose a strong password to restore access to your leave portal account.
       </p>
 
@@ -15,15 +15,15 @@
         <%= f.hidden_field :reset_password_token %>
 
         <div>
-          <%= f.label :password, "New password", class: "text-sm font-medium text-slate-900" %>
+          <%= f.label :password, "New password", class: "text-sm font-medium" %>
           <%= f.password_field :password,
                                autofocus: true,
                                autocomplete: "new-password",
                                placeholder: "Create a new password",
                                data: { password_visibility_target: "input" },
-                               class: "mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#44652d] focus:ring-4 focus:ring-[#44652d]/10" %>
+                               class: "mt-2 w-full h-[35px] rounded-md border px-4 text-sm outline-none border-slate-300 focus:border-primary" %>
           <% if @minimum_password_length %>
-            <p class="mt-2 text-xs leading-6 text-slate-500"><%= @minimum_password_length %> characters minimum.</p>
+            <p class="mt-2 text-xs leading-6"><%= @minimum_password_length %> characters minimum.</p>
           <% end %>
         </div>
 
@@ -33,7 +33,7 @@
                                autocomplete: "new-password",
                                placeholder: "Repeat the new password",
                                data: { password_visibility_target: "input" },
-                               class: "mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#44652d] focus:ring-4 focus:ring-[#44652d]/10" %>
+                               class: "mt-2 w-full h-[35px] rounded-md border px-4 text-sm outline-none border-slate-300 focus:border-primary" %>
         </div>
 
         <label class="flex items-center gap-3 text-sm text-slate-600">
@@ -43,12 +43,12 @@
           <span data-password-visibility-target="toggleLabel">Show password</span>
         </label>
 
-        <%= f.submit "Change my password", class: "mt-2 inline-flex w-full items-center justify-center rounded-2xl bg-[#44652d] px-4 py-3.5 text-sm font-semibold text-white transition hover:bg-[#365123] focus:outline-none focus:ring-4 focus:ring-[#44652d]/20" %>
+        <%= f.submit "Change my password", class: "mt-2 inline-flex w-full h-[35px] items-center justify-center rounded-md bg-primary px-4 text-sm font-semibold text-white transition hover:bg-secondary focus:outline-none focus:ring-4 focus:ring-[#44652d]/20" %>
       <% end %>
 
       <div class="mt-8 text-center text-sm text-slate-600">
         Remembered your password?
-        <%= link_to "Login", new_session_path(resource_name), class: "font-semibold text-[#44652d] hover:text-[#31481f]" %>
+        <%= link_to "Login", new_session_path(resource_name), class: "font-semibold text-primary hover:text-secondary" %>
       </div>
     </div>
   </div>
