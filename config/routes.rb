@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get "dashboard/index"
   get "dashboard", to: "dashboard#index", as: :dashboard
+  get "dashboard/settings/manage_account", to: "dashboard#manage_account", as: :dashboard_manage_account
   devise_for :users, skip: [:registrations]
 
   as :user do
@@ -13,7 +14,7 @@ Rails.application.routes.draw do
   end
 
   authenticated :user do
-    root to: redirect("/users/edit"), as: :authenticated_root
+    root to: redirect("/dashboard"), as: :authenticated_root
   end
 
   unauthenticated do

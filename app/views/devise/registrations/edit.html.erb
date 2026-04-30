@@ -10,48 +10,94 @@
           data: { controller: "password-visibility form-validation", action: "submit->form-validation#validateForm focusout->form-validation#validateField input->form-validation#validateField" } }) do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
         <div>
-          <%= f.label :email, "Email address", class: "text-sm font-medium" %>
-          <%= f.email_field :email,autofocus: true,autocomplete: "email",placeholder: "Enter your email",
-          required: true,data: { form_validation_target: "field", form_validation_required_message: "Email address is required." },
-          class: "mt-2 w-full h-[35px] rounded-md border border-slate-300 px-4 text-sm  outline-none transition focus:border-primary" %>
+          <%= f.label :email, "Email address",
+            class: "text-sm font-medium" %>
+
+          <%= f.email_field :email,
+            autofocus: true,
+            autocomplete: "email",
+            placeholder: "Enter your email",
+            required: true,
+            data: {
+              form_validation_target: "field",
+              form_validation_required_message: "Email address is required."
+            },
+            class: "mt-2 w-full h-[35px] rounded-md border border-slate-300 px-4 text-sm outline-none transition focus:border-primary" %>
         </div>
         <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
           <div class="rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-            Confirmation pending for <span class="font-semibold"><%= resource.unconfirmed_email %></span>.
+            Confirmation pending for
+            <span class="font-semibold">
+              <%= resource.unconfirmed_email %>
+            </span>.
           </div>
         <% end %>
         <div>
-          <%= f.label :current_password, "Current password", class: "text-sm font-medium " %>
-          <%= f.password_field :current_password,autocomplete: "current-password",placeholder: "Enter your current password to save changes",
-          required: true,data: { password_visibility_target: "input", form_validation_target: "field", form_validation_required_message: "Current password is required to save changes." },
-          class: "mt-2 w-full h-[35px] rounded-md border border-slate-300 px-4 text-sm  outline-none transition  focus:border-primary" %>
+          <%= f.label :current_password, "Current password",
+            class: "text-sm font-medium" %>
+
+          <%= f.password_field :current_password,
+            autocomplete: "current-password",
+            placeholder: "Enter your current password to save changes",
+            required: true,
+            data: {
+              password_visibility_target: "input",
+              form_validation_target: "field",
+              form_validation_required_message: "Current password is required to save changes."
+            },
+            class: "mt-2 w-full h-[35px] rounded-md border border-slate-300 px-4 text-sm outline-none transition focus:border-primary" %>
         </div>
         <div>
-          <%= f.label :password, "New password", class: "text-sm font-medium " %>
-          <%= f.password_field :password,autocomplete: "new-password",placeholder: "Leave blank to keep your current password",
-          minlength: @minimum_password_length || Devise.password_length.min,pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).+",
-          title: "Must include uppercase, lowercase, number, and special character.",data: { password_visibility_target: "input", form_validation_target: "field", 
-          form_validation_pattern_message: "Password must include uppercase, lowercase, number, and special character." },
-          class: "mt-2 w-full h-[35px] rounded-md border border-slate-300 px-4 text-sm  outline-none transition  focus:border-primary" %>
+          <%= f.label :password, "New password",
+            class: "text-sm font-medium" %>
+
+          <%= f.password_field :password,
+            autocomplete: "new-password",
+            placeholder: "Leave blank to keep your current password",
+            minlength: @minimum_password_length || Devise.password_length.min,
+            pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).+",
+            title: "Must include uppercase, lowercase, number, and special character.",
+            data: {
+              password_visibility_target: "input",
+              form_validation_target: "field",
+              form_validation_pattern_message: "Password must include uppercase, lowercase, number, and special character."
+            },
+            class: "mt-2 w-full h-[35px] rounded-md border border-slate-300 px-4 text-sm outline-none transition focus:border-primary" %>
         </div>
         <div>
-          <%= f.label :password_confirmation, "Confirm new password", class: "text-sm font-medium " %>
-          <%= f.password_field :password_confirmation,autocomplete: "new-password",placeholder: "Repeat the new password",data: { password_visibility_target: "input",
-          form_validation_target: "field", form_validation_required_if_field_id: "user_password", form_validation_required_message: "Password confirmation is required when setting a new password.", 
-          form_validation_match_field_id: "user_password", form_validation_match_message: "Password confirmation must match the new password." },
-          class: "mt-2 w-full h-[35px] rounded-md border border-slate-300 px-4 text-sm  outline-none transition  focus:border-primary" %>
+          <%= f.label :password_confirmation, "Confirm new password",
+            class: "text-sm font-medium" %>
+
+          <%= f.password_field :password_confirmation,
+            autocomplete: "new-password",
+            placeholder: "Repeat the new password",
+            data: {
+              password_visibility_target: "input",
+              form_validation_target: "field",
+              form_validation_required_if_field_id: "user_password",
+              form_validation_required_message: "Password confirmation is required when setting a new password.",
+              form_validation_match_field_id: "user_password",
+              form_validation_match_message: "Password confirmation must match the new password."
+            },
+            class: "mt-2 w-full h-[35px] rounded-md border border-slate-300 px-4 text-sm outline-none transition focus:border-primary" %>
         </div>
         <label class="flex items-center gap-3 text-sm">
-          <input type="checkbox"class="h-4 w-4 rounded border-slate-300 text-[#44652d] focus:ring-[#44652d]/20"data-action="password-visibility#toggle">
-          <span data-password-visibility-target="toggleLabel">Show password</span>
+          <input
+            type="checkbox"
+            class="h-4 w-4 rounded border-slate-300 text-[#44652d] focus:ring-[#44652d]/20"
+            data-action="password-visibility#toggle"
+          >
+          <span data-password-visibility-target="toggleLabel">
+            Show password
+          </span>
         </label>
         <%= f.submit "Save changes", 
         class: "mt-2 inline-flex w-full h-[35px] items-center justify-center rounded-md bg-primary px-4 text-sm font-semibold text-white transition hover:bg-secondary" %>
       <% end %>
       <div class="my-8 border-t border-slate-200"></div>
       <div class="space-y-2">
-        <div class="space-y-1 flex justify-center">
-          <h3 class="text-lg font-semibold ">Session</h3>
+        <div class="flex justify-center">
+          <h3 class="text-lg font-semibold">Session</h3>
         </div>
         <%= button_to "Logout",destroy_user_session_path,method: :delete,
         class: "w-full h-[35px] rounded-md border bg-red-700 text-sm font-semibold text-white transition hover:bg-red-800 focus:outline-none" %>

@@ -43,8 +43,11 @@
           </div>
         <% end %>
 
-        <%= render "devise/shared/error_messages", resource: resource if other_errors_present %>
+        <% if other_errors_present %>
+          <%= render "devise/shared/error_messages", resource: resource %>
+        <% end %>
 
+        <!-- Email -->
         <div>
           <%= f.label :email, "Email address", class: "text-sm font-medium" %>
 
@@ -61,6 +64,7 @@
 
       <% end %>
 
+      <!-- Footer -->
       <div class="mt-8 text-center text-sm">
         Remembered your password?
         <%= link_to "Login",

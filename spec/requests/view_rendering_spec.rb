@@ -21,6 +21,26 @@ RSpec.describe 'View rendering', type: :request do
       expect(response.body).to include('Welcome to Dashboard')
       expect(response.body).to include('Employee Leave Portal')
     end
+
+    it 'redirects sign in to the dashboard' do
+      sign_in_as(user)
+
+      expect(response).to redirect_to(dashboard_path)
+    end
+  end
+
+  describe 'manage account page inside dashboard' do
+    it 'renders account management content inside settings' do
+      sign_in_as(user)
+      get dashboard_manage_account_path
+
+      expect(response).to have_http_status(:success)
+      expect(response.body).to include('Manage account')
+      expect(response.body).to include('Settings')
+      expect(response.body).to include('Save changes')
+      expect(response.body).to include("action=\"#{user_registration_path}\"")
+      expect(response.body).to include("action=\"#{destroy_user_session_path}\"")
+    end
   end
 
   describe 'sign in page' do
