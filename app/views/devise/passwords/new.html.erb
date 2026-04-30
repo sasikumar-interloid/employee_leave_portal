@@ -1,33 +1,52 @@
 <% content_for :title, "Forgot Password" %>
 <% content_for :full_width_auth, true %>
 <% content_for :hide_footer, true %>
-
-<section class="mx-auto sm:w-[60%] md:w-[50%] lg:w-[50%] xl:w-[40%] 2xl:w-[40%] overflow-hidden rounded-[8px] bg-white shadow-xl" >
+<section class="mx-auto sm:w-[60%] md:w-[50%] lg:w-[50%] xl:w-[40%] 2xl:w-[40%] overflow-hidden rounded-[8px] bg-white shadow-xl">
   <div class="flex items-center px-4 py-4 sm:px-10 lg:px-8 lg:py-8">
     <div class="mx-auto w-full">
-
-      <h1 class="sm:text-lg font-semibold tracking-tight sm:text-lg text-center">Reset your password</h1>
-      <p class="mt-4 text-sm leading-7">Enter your email address and we will send you instructions to reset your password.</p>
-
-      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { class: "mt-10 space-y-6",
-        data: { controller: "form-validation", action: "submit->form-validation#validateForm focusout->form-validation#validateField input->form-validation#validateField" } }) do |f| %>
+      <h1 class="text-center text-lg font-semibold tracking-tight">
+        Reset your password
+      </h1>
+      <p class="mt-4 text-sm leading-7">
+        Enter your email address and we will send you instructions to reset your password.
+      </p>
+      <%= form_for(
+            resource,
+            as: resource_name,
+            url: password_path(resource_name),
+            html: {
+              class: "mt-10 space-y-6",
+              data: {
+                controller: "form-validation",
+                action: "submit->form-validation#validateForm focusout->form-validation#validateField input->form-validation#validateField"
+              }
+            }
+          ) do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
-
         <div>
-          <%= f.label :email, "Email address", class: "text-sm font-medium" %>
-          <%= f.email_field :email,autofocus: true,autocomplete: "email",placeholder: "Enter your email",
-          required: true,data: { form_validation_target: "field", form_validation_required_message: "Email address is required." },
-          class: "mt-2 w-full h-[35px] rounded-md border border-slate-300 px-4 text-xs outline-none transition focus:border-primary" %>
+          <%= f.label :email,
+                "Email address",
+                class: "text-sm font-medium" %>
+          <%= f.email_field :email,
+                autofocus: true,
+                autocomplete: "email",
+                placeholder: "Enter your email",
+                required: true,
+                data: {
+                  form_validation_target: "field",
+                  form_validation_required_message: "Email address is required."
+                },
+                class: "mt-2 w-full h-[35px] rounded-md border border-slate-300 px-4 text-xs outline-none transition focus:border-primary" %>
         </div>
-
-        <%= f.submit "Send reset instructions", class: "mt-2 inline-flex w-full h-[35px] items-center justify-center rounded-md bg-primary px-4 text-sm font-semibold text-white transition hover:bg-secondary focus:outline-none focus:ring-4 focus:ring-[#44652d]/20" %>
-        <% end %>
-
+        <%= f.submit "Send reset instructions",
+              class: "mt-2 inline-flex w-full h-[35px] items-center justify-center rounded-md bg-primary px-4 text-sm font-semibold text-white transition hover:bg-secondary focus:outline-none focus:ring-4 focus:ring-[#44652d]/20" %>
+      <% end %>
       <div class="mt-8 text-center text-sm">
         Remembered your password?
-        <%= link_to "Login", new_session_path(resource_name), class: "font-semibold text-primary hover:text-secondary" %>
+        <%= link_to "Login",
+              new_session_path(resource_name),
+              class: "font-semibold text-primary hover:text-secondary" %>
       </div>
-
     </div>
   </div>
 </section>
