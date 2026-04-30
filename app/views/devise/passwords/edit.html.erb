@@ -5,23 +5,18 @@
 <section class="mx-auto 2xl:w-[40%] xl:w-[50%] lg:w-[50%] md:w-[60%] sm:w-[80%] overflow-hidden rounded-md bg-white shadow-xl">
   <div class="flex items-center px-3 py-4 sm:px-4 lg:px-8 lg:py-8">
     <div class="mx-auto w-full">
-      <h1 class="text-lg font-semibold tracking-tight">Create a new password</h1>
-      <p class="mt-4 text-sm leading-7">
-        Choose a strong password to restore access to your leave portal account.
-      </p>
 
-      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "mt-10 space-y-6", data: { controller: "password-visibility" } }) do |f| %>
+      <h1 class="text-lg font-semibold tracking-tight">Create a new password</h1>
+      <p class="mt-4 text-sm leading-7">Choose a strong password to restore access to your leave portal account.</p>
+
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "mt-10 space-y-6", data: { controller: "password-visibility form-validation", 
+        action: "submit->form-validation#validateForm focusout->form-validation#validateField input->form-validation#validateField" } }) do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
         <%= f.hidden_field :reset_password_token %>
 
         <div>
           <%= f.label :password, "New password", class: "text-sm font-medium" %>
-          <%= f.password_field :password,
-                               autofocus: true,
-                               autocomplete: "new-password",
-                               placeholder: "Create a new password",
-                               data: { password_visibility_target: "input" },
-                               class: "mt-2 w-full h-[35px] rounded-md border px-4 text-sm outline-none border-slate-300 focus:border-primary" %>
+          <%= f.password_field :password,autofocus: true,autocomplete: "new-password",placeholder: "Create a new password",required: true,minlength: @minimum_password_length || Devise.password_length.min,pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).+",title: "Must include uppercase, lowercase, number, and special character.",data: { password_visibility_target: "input", form_validation_target: "field", form_validation_required_message: "New password is required.", form_validation_pattern_message: "Password must include uppercase, lowercase, number, and special character." },class: "mt-2 w-full h-[35px] rounded-md border px-4 text-sm outline-none border-slate-300 focus:border-primary" %>
           <% if @minimum_password_length %>
             <p class="mt-2 text-xs leading-6"><%= @minimum_password_length %> characters minimum.</p>
           <% end %>
@@ -29,27 +24,22 @@
 
         <div>
           <%= f.label :password_confirmation, "Confirm new password", class: "text-sm font-medium text-slate-900" %>
-          <%= f.password_field :password_confirmation,
-                               autocomplete: "new-password",
-                               placeholder: "Repeat the new password",
-                               data: { password_visibility_target: "input" },
-                               class: "mt-2 w-full h-[35px] rounded-md border px-4 text-sm outline-none border-slate-300 focus:border-primary" %>
+          <%= f.password_field :password_confirmation,autocomplete: "new-password",placeholder: "Repeat the new password",required: true,data: { password_visibility_target: "input", form_validation_target: "field", form_validation_required_message: "Password confirmation is required.", form_validation_match_field_id: "user_password", form_validation_match_message: "Password confirmation must match the password." },class: "mt-2 w-full h-[35px] rounded-md border px-4 text-sm outline-none border-slate-300 focus:border-primary" %>
         </div>
 
         <label class="flex items-center gap-3 text-sm text-slate-600">
-          <input type="checkbox"
-                 class="h-4 w-4 rounded border-slate-300 text-[#44652d] focus:ring-[#44652d]/20"
-                 data-action="password-visibility#toggle">
+          <input type="checkbox"class="h-4 w-4 rounded border-slate-300 text-[#44652d] focus:ring-[#44652d]/20"data-action="password-visibility#toggle">
           <span data-password-visibility-target="toggleLabel">Show password</span>
         </label>
 
         <%= f.submit "Change my password", class: "mt-2 inline-flex w-full h-[35px] items-center justify-center rounded-md bg-primary px-4 text-sm font-semibold text-white transition hover:bg-secondary focus:outline-none focus:ring-4 focus:ring-[#44652d]/20" %>
-      <% end %>
+        <% end %>
 
-      <div class="mt-8 text-center text-sm text-slate-600">
-        Remembered your password?
-        <%= link_to "Login", new_session_path(resource_name), class: "font-semibold text-primary hover:text-secondary" %>
-      </div>
+        <div class="mt-8 text-center text-sm text-slate-600">
+          Remembered your password?
+          <%= link_to "Login", new_session_path(resource_name), class: "font-semibold text-primary hover:text-secondary" %>
+        </div>
+
     </div>
   </div>
 </section>

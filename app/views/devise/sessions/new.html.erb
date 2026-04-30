@@ -2,24 +2,22 @@
 <% content_for :full_width_auth, true %>
 <% content_for :hide_footer, true %>
 
-<section class="mx-auto w-full 2xl:max-w-5xl  rounded-md bg-white shadow-[0_5px_80px_rgba(15,23,42,0.09)] lg:grid">
+<section class="mx-auto sm:w-[75%] w-full rounded-md bg-white shadow-[0_5px_80px_rgba(15,23,42,0.09)] lg:grid">
   <div class="flex flex-col lg:flex-row lg:items-center">
     <div class="w-full p-6 md:p-8 lg:w-1/2">
 
       <h1 class="font-semibold text-2xl text-center mt-4">Welcome back</h1>
-      <p class="mt-4 text-sm leading-7 lx:leading-2">
-        Sign in to continue managing leave requests, balances, and approvals.
-      </p>  
+        <p class="mt-4 text-sm leading-7 lx:leading-2">Sign in to continue managing leave requests, balances, and approvals.</p>  
 
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "mt-4 space-y-6", data: { controller: "password-visibility" } }) do |f| %>
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "mt-4 space-y-6", 
+          data: { controller: "password-visibility form-validation", action: "submit->form-validation#validateForm focusout->form-validation#validateField input->form-validation#validateField" } }) do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
 
         <div>
           <%= f.label :email, "Email address", class: "text-sm" %>
-          <%= f.email_field :email,
-                            autofocus: true,
-                            placeholder: "Enter your email",
-                            class: "mt-2 w-full h-[35px] rounded-sm border border-slate-300 px-4 text-xs outline-none transition focus:border-primary" %>
+          <%= f.email_field :email,autofocus: true,placeholder: "Enter your email",required: true, autocomplete: "email",
+          data: { form_validation_target: "field", form_validation_required_message: "Email address is required." },
+          class: "mt-2 w-full h-[35px] rounded-sm border border-slate-300 px-4 text-xs outline-none transition focus:border-primary" %>
         </div>
 
         <div>
@@ -27,44 +25,47 @@
             <%= f.label :password, class: "text-sm font-medium text-slate-900" %>
             <%= link_to "Forgot password?", new_password_path(resource_name), class: "text-sm font-medium text-primary hover:text-secondary" %>
           </div>
-          <%= f.password_field :password,
-                               placeholder: "Enter your password",
-                               data: { password_visibility_target: "input" },
-                               class: "mt-2 w-full h-[35px] rounded-sm border border-slate-300 px-4 text-xs text-slate-900 outline-none transition focus:border-primary" %>
+
+          <%= f.password_field :password,placeholder:"Enter your password",autocomplete: "current-password",
+          required: true,minlength: @minimum_password_length || Devise.password_length.min,pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).+",
+          title: "Must include uppercase, lowercase, number, and special character.",
+          data: { password_visibility_target: "input", form_validation_target: "field", form_validation_required_message: "Password is required.", 
+          form_validation_pattern_message: "Password must include uppercase, lowercase, number, and special character." },
+          class: "mt-2 w-full h-[35px] rounded-sm border border-slate-300 px-4 text-xs text-slate-900 outline-none transition focus:border-primary" %>
         </div>
 
-        <div class="flex">
-            <label class="flex items-center gap-3 text-sm">
-            <input type="checkbox"
-                  class="h-4 w-4 rounded"
-                  data-action="password-visibility#toggle">
-            <span data-password-visibility-target="toggleLabel">Show password</span>
-          </label>
+        <div class="flex flex-col sm:flex-row gap-2 md:gap-2">
+            <label class="flex items-center gap-3 text-sm ">
+              <input type="checkbox"class="h-3 w-3 rounded"data-action="password-visibility#toggle">
+              <span data-password-visibility-target="toggleLabel">Show password</span>
+            </label>
 
           <% if devise_mapping.rememberable? %>
-            <label class="flex items-center gap-3 text-sm ml-auto">
-              <%= f.check_box :remember_me, class: "h-4 w-4 rounded " %>
+            <label class="flex items-center gap-3 text-sm ml-0">
+              <%= f.check_box :remember_me, class: "h-3 w-3 rounded " %>
               <span>Remember me</span>
             </label>
           <% end %>
         </div>
         
+      <div>
+          <%= f.submit "Login",
+          class: "w-full h-[35px] rounded-sm bg-primary text-sm font-semibold text-white transition hover:bg-secondary focus:outline-none" %>
+          <% end %>
 
-        <%= f.submit "Login", class: "mt-2 w-full h-[35px] items-center justify-center rounded-md bg-[#2563EB] text-sm font-semibold text-white transition hover:bg-secondary focus:outline-none" %>
-      <% end %>
+        <div class="mt-8 text-center text-sm text-slate-600 flex flex-col gap-2 sm:flex-row sm:justify-center">
+          <% if devise_mapping.registerable? %>
+            Don't have an account?
+            <%= link_to "Sign up", new_registration_path(resource_name), class: "font-semibold text-primary hover:text-secondary" %>
+          <% end %>
+        </div>
 
-      <div class="mt-8 text-center text-sm text-slate-600">
-        <% if devise_mapping.registerable? %>
-          Don't have an account?
-          <%= link_to "Sign up", new_registration_path(resource_name), class: "font-semibold text-primary hover:text-secondary" %>
-        <% end %>
       </div>
-    </div>
 
-    <div class="lg:flex lg:w-1/2 lg:items-center lg:justify-center lg:p-8 hidden">
-      <%= image_tag "login.svg", alt: "Login image", class: "h-auto w-full max-w-md" %>
-    </div>
-  
   </div>
+
+   <div class="lg:flex lg:w-1/2 lg:items-center lg:justify-center lg:p-4 hidden">
+        <%= image_tag "login.svg", alt: "Login image", class: "h-auto w-full max-w-md" %>
+      </div>
 
 </section>

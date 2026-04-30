@@ -1,26 +1,18 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :lockable, :confirmable
+  PASSWORD_FORMAT = /\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).+\z/
 
-  validates :email, presence: true, uniqueness: { conditions: -> { where(deleted_at: nil) } }
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :lockable, :confirmable
+
+  validates :email, presence: true, uniqueness: true
   validates :encrypted_password, presence: true
+  validates :password,
+    format: {
+      with: PASSWORD_FORMAT,
+      message: "must include at least one uppercase letter, one lowercase letter, one number, and one special character"
+    },
+    allow_blank: true
 
   after_create_commit :send_welcome_email
-
-  def self.find_for_authentication(warden_conditions)
-    super(warden_conditions)&.then { |user| user.deleted_at? ? nil : user }
-  end
-
-  def soft_delete!
-    update_columns(
-      deleted_at: Time.current,
-      confirmation_token: nil,
-      reset_password_token: nil,
-      unlock_token: nil,
-      updated_at: Time.current
-    )
-  end
 
   private
 

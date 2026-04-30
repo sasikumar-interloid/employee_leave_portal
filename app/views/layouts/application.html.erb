@@ -19,7 +19,6 @@
 
   <body>
 
-   
     <div class="mx-auto flex min-h-screen max-w-6xl flex-col px-4 py-6">
 
       <% if notice.present? || alert.present? %>
@@ -44,6 +43,7 @@
             </div>
           <% end %>
 
+          
           <% if alert.present? %>
             <div class="pointer-events-auto rounded-md border border-red-100 bg-red-50 p-4 text-sm shadow-sm"
                 role="alert"
@@ -66,8 +66,10 @@
 
         </div>
       <% end %>
+  
 
       <main class="flex flex-1 items-center justify-center">
+        
         <% if content_for?(:full_width_auth) %>
           <div class="w-full max-w-7xl">
             <%= yield %>

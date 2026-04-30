@@ -1,7 +1,16 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: {
-    registrations: "users/registrations"
-  }
+  get "dashboard/index"
+  get "dashboard", to: "dashboard#index", as: :dashboard
+  devise_for :users, skip: [:registrations]
+
+  as :user do
+    get "users/sign_up", to: "devise/registrations#new", as: :new_user_registration
+    get "users/edit", to: "devise/registrations#edit", as: :edit_user_registration
+    patch "users", to: "devise/registrations#update", as: :user_registration
+    put "users", to: "devise/registrations#update"
+    delete "users", to: "devise/registrations#destroy"
+    post "users", to: "devise/registrations#create"
+  end
 
   authenticated :user do
     root to: redirect("/users/edit"), as: :authenticated_root
