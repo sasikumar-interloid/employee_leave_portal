@@ -1,18 +1,15 @@
 <% content_for :title, "Change Password" %>
 <% content_for :full_width_auth, true %>
 <% content_for :hide_footer, true %>
-
 <section class="mx-auto 2xl:w-[40%] xl:w-[50%] lg:w-[50%] md:w-[60%] sm:w-[80%] overflow-hidden rounded-md bg-white shadow-xl">
   <div class="flex items-center px-3 py-4 sm:px-4 lg:px-8 lg:py-8">
     <div class="mx-auto w-full">
       <h1 class="text-lg font-semibold tracking-tight">Create a new password</h1>
       <p class="mt-4 text-sm leading-7">Choose a strong password to restore access to your leave portal account.</p>
-
       <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "mt-10 space-y-6",
           data: { controller: "password-visibility form-validation", action: "submit->form-validation#validateForm focusout->form-validation#validateField input->form-validation#validateField" } }) do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
         <%= f.hidden_field :reset_password_token %>
-
         <%# New password %>
         <div>
           <%= f.label :password, "New password", class: "text-sm font-medium" %>
@@ -53,7 +50,6 @@
             <p class="mt-2 text-xs leading-6"><%= @minimum_password_length %> characters minimum.</p>
           <% end %>
         </div>
-
         <%# Confirm password %>
         <div>
           <%= f.label :password_confirmation, "Confirm new password", class: "text-sm font-medium text-slate-900" %>
@@ -88,11 +84,9 @@
             </button>
           </div>
         </div>
-
         <%= f.submit "Change my password",
           class: "mt-2 inline-flex w-full h-[35px] items-center justify-center rounded-md bg-primary px-4 text-sm font-semibold text-white transition hover:bg-secondary focus:outline-none focus:ring-4 focus:ring-[#44652d]/20" %>
       <% end %>
-
       <%# Login link %>
       <div class="mt-8 text-center text-sm text-slate-600">
         Remembered your password?

@@ -1,0 +1,38 @@
+<header class="fixed top-0 left-0 right-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 bg-white px-4 shadow-sm">
+  <div class="flex items-center gap-3">
+    <button class="rounded-md p-1.5 hover:bg-slate-100 lg:hidden"
+            data-action="click->sidebar#toggle"
+      aria-label="Toggle sidebar">
+      <%= app_icon("menu", css_class: "size-5") %>
+    </button>
+    <span class="flex items-center gap-2 font-semibold text-primary text-sm sm:text-lg">
+      <%= app_icon("calendar", css_class: "size-5") %>
+      Leave Portal
+    </span>
+  </div>
+  <div class="flex items-center gap-2"
+       data-controller="profile-dropdown"
+       data-action="click@window->profile-dropdown#closeIfOutside">
+    <details class="relative" data-profile-dropdown-target="menu">
+      <summary class="flex cursor-pointer list-none items-center gap-2 rounded-md px-2 py-1 text-sm transition hover:bg-slate-100">
+        <div class="flex size-8 items-center justify-center rounded-full bg-primary text-xs font-semibold text-white">
+          <%= current_user.initials %>
+        </div>
+        <%= app_icon("chevron-down", css_class: "size-4") %>
+      </summary>
+      <div class="absolute right-0 top-full mt-2 w-52 rounded-sm border border-slate-200 bg-white p-2 shadow-lg">
+        <div class="border-b border-slate-100 px-3 py-2 text-xs break-words">
+          <%= current_user.email %>
+        </div>
+        <%= link_to "Manage Account",
+            dashboard_manage_account_path,
+            class: "mt-2 block px-3 py-2 text-sm text-slate-700 transition hover:bg-slate-50 hover:text-slate-900" %>
+        <%= button_to "Sign out",
+            destroy_user_session_path,
+            method: :delete,
+            form_class: "mt-1",
+            class: "block w-full px-3 py-2 text-left text-sm text-red-700 transition hover:bg-slate-50 hover:text-red-800" %>
+      </div>
+    </details>
+  </div>
+</header>

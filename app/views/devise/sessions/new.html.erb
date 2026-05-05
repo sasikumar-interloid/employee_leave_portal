@@ -1,19 +1,15 @@
 <% content_for :title, "Login" %>
 <% content_for :full_width_auth, true %>
 <% content_for :hide_footer, true %>
-
 <section class="mx-auto w-full sm:w-[75%] rounded-md bg-white shadow-[0_5px_80px_rgba(15,23,42,0.09)] lg:grid">
   <div class="flex flex-col lg:flex-row lg:items-center">
-
     <%# Left side: login form %>
     <div class="w-full p-6 md:p-8 lg:w-1/2">
       <h1 class="font-semibold text-2xl text-center mt-4">Welcome back</h1>
       <p class="mt-4 text-sm leading-7">Sign in to continue managing leave requests, balances, and approvals.</p>
-
       <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "mt-4 space-y-6",
           data: { controller: "password-visibility form-validation", action: "submit->form-validation#validateForm focusout->form-validation#validateField input->form-validation#validateField" } }) do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
-
         <%# Email %>
         <div>
           <%= f.label :email, "Email address", class: "text-sm" %>
@@ -28,7 +24,6 @@
             },
             class: "mt-2 w-full h-[35px] rounded-sm border border-slate-300 px-4 text-xs outline-none transition focus:border-primary" %>
         </div>
-
         <%# Password %>
         <div>
           <div class="flex items-center justify-between gap-4">
@@ -68,7 +63,6 @@
             </button>
           </div>
         </div>
-
         <%# Remember me %>
         <div class="flex flex-col sm:flex-row gap-2 md:gap-2">
           <% if devise_mapping.rememberable? %>
@@ -78,11 +72,9 @@
             </label>
           <% end %>
         </div>
-
         <%= f.submit "Login",
           class: "w-full h-[35px] rounded-sm bg-primary text-sm font-semibold text-white transition hover:bg-secondary focus:outline-none" %>
       <% end %>
-
       <%# Sign up link %>
       <div class="mt-8 text-center text-sm text-slate-600 flex flex-col gap-2 sm:flex-row sm:justify-center">
         <% if devise_mapping.registerable? %>
@@ -91,7 +83,6 @@
         <% end %>
       </div>
     </div>
-
     <%# Right side: image %>
     <div class="lg:flex lg:w-1/2 lg:items-center lg:justify-center lg:p-4 hidden">
       <%= image_tag "login.svg", alt: "Login image", class: "h-auto w-full max-w-md" %>
