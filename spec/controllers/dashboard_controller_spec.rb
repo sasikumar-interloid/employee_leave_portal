@@ -19,21 +19,4 @@ RSpec.describe DashboardController, type: :controller do
     end
   end
 
-  describe 'GET #manage_account' do
-    let(:user) { create(:user) }
-
-    it 'redirects unauthenticated users to sign in' do
-      get :manage_account
-
-      expect(response).to redirect_to(new_user_session_path)
-    end
-
-    it 'returns success for authenticated users' do
-      sign_in user
-
-      get :manage_account
-
-      expect(response).to have_http_status(:success)
-    end
-  end
 end

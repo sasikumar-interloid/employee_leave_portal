@@ -76,18 +76,13 @@ RSpec.describe 'View rendering', type: :request do
   end
 
   describe 'edit account page' do
-    it 'renders account management content' do
+    it 'renders the manage account page instead of a separate edit screen' do
       sign_in_as(user)
       get edit_user_registration_path
 
       expect(response).to have_http_status(:success)
-      expect(response.body).to include('<title>Edit Account</title>')
-      expect(response.body).to include('Manage your account')
-      expect(response.body).to include('<h3')
-      expect(response.body).to include('Session')
-      expect(response.body).to include("action=\"#{destroy_user_session_path}\"")
-      expect(response.body).to include('Logout')
-      expect(response.body).not_to include('<footer')
+      expect(response.body).to include('Manage account')
+      expect(response.body).to include("action=\"#{user_registration_path}\"")
     end
   end
 

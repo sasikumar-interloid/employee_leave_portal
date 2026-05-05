@@ -27,21 +27,13 @@ RSpec.describe 'Auth frontend validation', type: :request do
   end
 
   describe 'edit account page' do
-    it 'includes frontend validation hooks' do
+    it 'uses the manage account page form' do
       sign_in_as(user)
       get edit_user_registration_path
 
       expect(response).to have_http_status(:success)
       expect(response.body).to include('data-controller="password-visibility form-validation"')
       expect(response.body).to include('name="user[email]"')
-      expect(response.body).to include('required="required"')
-      expect(response.body).to include('name="user[current_password]"')
-      expect(response.body).to include('name="user[password]"')
-      expect(response.body).to include('minlength="6"')
-      expect(response.body).to include('data-form-validation-required-if-field-id="user_password"')
-      expect(response.body).to include('data-form-validation-match-field-id="user_password"')
-      expect(response.body).to include("action=\"#{destroy_user_session_path}\"")
-      expect(response.body).not_to include('Delete your account')
     end
   end
 

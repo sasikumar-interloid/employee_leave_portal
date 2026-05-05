@@ -1,8 +1,11 @@
 <% if resource.errors.any? %>
-  <div id="error_explanation" class="rounded-md border border-rose-200 bg-rose-50 px-2 py-2 text-sm text-rose-900" data-controller="auto-dismiss" data-auto-dismiss-delay-value="4000" data-turbo-temporary>
-    <ul class="mt-2 space-y-1 pl-2 text-sm">
+  <div id="error_explanation" class="w-full overflow-hidden rounded-md border border-rose-200 bg-rose-50 px-4 py-3 text-sm leading-6 text-rose-900 shadow-sm sm:px-5" data-controller="auto-dismiss" data-auto-dismiss-delay-value="4000" data-turbo-temporary>
+    <ul class="space-y-2 break-words pr-1 text-sm">
       <% resource.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+        <li class="flex items-start gap-2">
+          <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-rose-500"></span>
+          <span><%= message %></span>
+        </li>
       <% end %>
     </ul>
   </div>

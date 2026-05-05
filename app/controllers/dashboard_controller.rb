@@ -3,7 +3,4 @@ class DashboardController < ApplicationController
 
   def index
   end
-
-  def manage_account
-  end
 end

@@ -22,7 +22,10 @@ Rails.application.routes.draw do
 
   # -- Dashboard --------------------------------------------------------------
   get "dashboard", to: "dashboard#index"
-  get "dashboard/settings/manage_account", to: "dashboard#manage_account", as: :dashboard_manage_account
+
+  devise_scope :user do
+    get "dashboard/settings/manage_account", to: "users/registrations#edit", as: :dashboard_manage_account
+  end
 
   # -- Health check -----------------------------------------------------------
   get "up" => "rails/health#show", as: :rails_health_check
