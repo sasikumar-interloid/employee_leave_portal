@@ -10,9 +10,9 @@ gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
-# Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+# Hotwire"s SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
-# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+# Hotwire"s modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
@@ -57,11 +57,11 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-  gem 'traceroute', '~> 0.8.1'
-  gem 'bullet', '~> 8.1', '>= 8.1.1'
-  gem 'robocop', '~> 0.1.1'
-  gem 'rack-mini-profiler', '~> 4.0', '>= 4.0.1'
-  gem 'rubycritic', '~> 5.0'
+  gem "traceroute", "~> 0.8.1"
+  gem "bullet", "~> 8.1", ">= 8.1.1"
+  gem 'rubocop', '~> 1.86', '>= 1.86.1'
+  gem "rack-mini-profiler", "~> 4.0", ">= 4.0.1"
+  gem "rubycritic", "~> 5.0"
 end
 
 group :test do

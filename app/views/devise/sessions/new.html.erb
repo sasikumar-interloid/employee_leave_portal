@@ -5,7 +5,7 @@
   <div class="flex flex-col lg:flex-row lg:items-center">
     <div class="w-full p-6 md:p-8 lg:w-1/2">
       <h1 class="font-semibold text-2xl text-center mt-4">Welcome back</h1>
-      <p class="mt-4 text-sm leading-7 lx:leading-2">Sign in to continue managing leave requests, balances, and approvals.</p>
+      <p class="mt-4 text-sm leading-7">Sign in to continue managing leave requests, balances, and approvals.</p>
       <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "mt-4 space-y-6", 
           data: { controller: "password-visibility form-validation", action: "submit->form-validation#validateForm focusout->form-validation#validateField input->form-validation#validateField" } }) do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
@@ -27,7 +27,7 @@
           form_validation_pattern_message: "Password must include uppercase, lowercase, number, and special character." },
           class: "mt-2 w-full h-[35px] rounded-sm border border-slate-300 px-4 text-xs text-slate-900 outline-none transition focus:border-primary" %>
         </div>
-        <div class="flex flex-col sm:flex-row gap-2 md:gap-2">
+        <div class="flex flex-col sm:flex-row gap-6 md:gap-6 justify-between">
           <label class="flex items-center gap-3 text-sm ">
             <input type="checkbox"class="h-3 w-3 rounded"data-action="password-visibility#toggle">
             <span data-password-visibility-target="toggleLabel">Show password</span>
@@ -42,16 +42,18 @@
         <div>
           <%= f.submit "Login",
           class: "w-full h-[35px] rounded-sm bg-primary text-sm font-semibold text-white transition hover:bg-secondary focus:outline-none" %>
+        </div>
         <% end %>
-        <div class="mt-8 text-center text-sm text-slate-600 flex flex-col gap-2 sm:flex-row sm:justify-center">
+         <p class="text-center mt-4 text-sm">or</p>
+        <div class="mt-4 text-center text-sm text-slate-600 flex flex-col gap-2 sm:flex-row sm:justify-center">
           <% if devise_mapping.registerable? %>
             Don't have an account?
             <%= link_to "Sign up", new_registration_path(resource_name), class: "font-semibold text-primary hover:text-secondary" %>
           <% end %>
         </div>
-      </div>
     </div>
-    <div class="lg:flex lg:w-1/2 lg:items-center lg:justify-center lg:p-4 hidden">
+    <div class="hidden lg:flex lg:w-1/2 lg:items-center lg:justify-center lg:p-4">
       <%= image_tag "login.svg", alt: "Login image", class: "h-auto w-full max-w-md" %>
     </div>
-  </section>
+  </div>
+</section>

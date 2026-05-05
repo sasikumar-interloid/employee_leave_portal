@@ -44,10 +44,11 @@
             <%= current_user.email[0].upcase %>
           </div>
           <span class="hidden text-sm font-medium sm:block"><%= current_user.email %></span>
-          <%= link_to destroy_user_session_path, data: { turbo_method: :delete },
-              class: "ml-1 rounded-md px-2 py-1 text-xs text-slate-500 hover:bg-slate-100 hover:text-slate-700" do %>
-            Sign out
-          <% end %>
+          <%= button_to "Sign out",
+              destroy_user_session_path,
+              method: :delete,
+              form_class: "ml-1",
+              class: "rounded-md px-2 py-1 text-xs text-slate-500 hover:bg-slate-100 hover:text-slate-700" %>
         </div>
       </div>
     </header>

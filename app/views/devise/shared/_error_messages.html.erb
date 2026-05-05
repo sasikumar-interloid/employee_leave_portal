@@ -1,9 +1,16 @@
 <% if resource.errors.any? %>
-  <div id="error_explanation" class="rounded-md border border-rose-200 bg-rose-50 px-2 py-1 text-sm text-rose-900" data-controller="auto-dismiss" data-auto-dismiss-delay-value="4000" data-turbo-temporary>
-    <ul class="mt-2 space-y-1 pl-2 text-sm">
-      <% resource.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
+  <div class="pointer-events-none fixed right-4 top-4 z-50 flex w-full max-w-sm flex-col gap-3 sm:right-6 sm:top-6">
+    <div id="error_explanation"
+         class="pointer-events-auto rounded-md border border-rose-200 bg-rose-50 p-4 text-sm text-rose-900 shadow-sm"
+         role="alert"
+         data-controller="auto-dismiss"
+         data-auto-dismiss-delay-value="4000"
+         data-turbo-temporary>
+      <ul class="space-y-1">
+        <% resource.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
   </div>
 <% end %>
