@@ -1,94 +1,103 @@
 <% content_for :title, "Change Password" %>
 <% content_for :full_width_auth, true %>
 <% content_for :hide_footer, true %>
+
 <section class="mx-auto 2xl:w-[40%] xl:w-[50%] lg:w-[50%] md:w-[60%] sm:w-[80%] overflow-hidden rounded-md bg-white shadow-xl">
   <div class="flex items-center px-3 py-4 sm:px-4 lg:px-8 lg:py-8">
     <div class="mx-auto w-full">
-      <h1 class="text-lg font-semibold tracking-tight">
-        Create a new password
-      </h1>
-      <p class="mt-4 text-sm leading-7">
-        Choose a strong password to restore access to your leave portal account.
-      </p>
-      <%= form_for(
-            resource,
-            as: resource_name,
-            url: password_path(resou  rce_name),
-            html: {
-              method: :put,
-              class: "mt-10 space-y-6",
-              data: {
-                controller: "password-visibility form-validation",
-                action: "submit->form-validation#validateForm focusout->form-validation#validateField input->form-validation#validateField"
-              }
-            }
-          ) do |f| %>
+      <h1 class="text-lg font-semibold tracking-tight">Create a new password</h1>
+      <p class="mt-4 text-sm leading-7">Choose a strong password to restore access to your leave portal account.</p>
+
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "mt-10 space-y-6",
+          data: { controller: "password-visibility form-validation", action: "submit->form-validation#validateForm focusout->form-validation#validateField input->form-validation#validateField" } }) do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
         <%= f.hidden_field :reset_password_token %>
-        <!-- New Password -->
+
+        <%# New password %>
         <div>
           <%= f.label :password, "New password", class: "text-sm font-medium" %>
-          <%= f.password_field :password,
-                autofocus: true,
-                autocomplete: "new-password",
-                placeholder: "Create a new password",
-                required: true,
-                minlength: @minimum_password_length || Devise.password_length.min,
-                pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).+",
-                title: "Must include uppercase, lowercase, number, and special character.",
-                data: {
-                  password_visibility_target: "input",
-                  form_validation_target: "field",
-                  form_validation_required_message: "New password is required.",
-                  form_validation_pattern_message: "Password must include uppercase, lowercase, number, and special character."
-                },
-                class: "mt-2 w-full h-[35px] rounded-md border border-slate-300 px-4 text-sm outline-none focus:border-primary" %>
+          <div class="relative mt-2">
+            <%= f.password_field :password,
+              autofocus: true,
+              autocomplete: "new-password",
+              placeholder: "Create a new password",
+              required: true,
+              minlength: @minimum_password_length || Devise.password_length.min,
+              pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).+",
+              title: "Must include uppercase, lowercase, number, and special character.",
+              data: {
+                password_visibility_target: "input",
+                form_validation_target: "field",
+                form_validation_required_message: "New password is required.",
+                form_validation_pattern_message: "Password must include uppercase, lowercase, number, and special character.",
+              },
+              class: "w-full h-[35px] rounded-md border border-slate-300 px-4 pr-10 text-sm outline-none focus:border-primary" %>
+            <button type="button"
+                    class="absolute inset-y-0 right-0 flex items-center px-3 text-slate-400 transition hover:text-primary focus:text-primary focus:outline-none"
+                    aria-label="Show password"
+                    aria-pressed="false"
+                    data-password-visibility-input-id="user_password"
+                    data-action="password-visibility#toggle">
+              <svg data-password-visibility-icon="show" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" class="h-4 w-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.964-7.178Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
+              <svg data-password-visibility-icon="hide" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" class="hidden h-4 w-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.58 10.58a2 2 0 1 0 2.83 2.83" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.88 5.09A10.94 10.94 0 0 1 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639a11.053 11.053 0 0 1-4.306 5.37M6.228 6.228A11.053 11.053 0 0 0 2.037 11.68a1.012 1.012 0 0 0 0 .639C3.423 16.49 7.36 19.5 12 19.5a10.97 10.97 0 0 0 4.132-.804" />
+              </svg>
+            </button>
+          </div>
           <% if @minimum_password_length %>
-            <p class="mt-2 text-xs leading-6">
-              <%= @minimum_password_length %> characters minimum.
-            </p>
+            <p class="mt-2 text-xs leading-6"><%= @minimum_password_length %> characters minimum.</p>
           <% end %>
         </div>
-        <!-- Confirm Password -->
+
+        <%# Confirm password %>
         <div>
-          <%= f.label :password_confirmation,
-                "Confirm new password",
-                class: "text-sm font-medium text-slate-900" %>
-          <%= f.password_field :password_confirmation,
-                autocomplete: "new-password",
-                placeholder: "Repeat the new password",
-                required: true,
-                data: {
-                  password_visibility_target: "input",
-                  form_validation_target: "field",
-                  form_validation_required_message: "Password confirmation is required.",
-                  form_validation_match_field_id: "user_password",
-                  form_validation_match_message: "Password confirmation must match the password."
-                },
-                class: "mt-2 w-full h-[35px] rounded-md border border-slate-300 px-4 text-sm outline-none focus:border-primary" %>
+          <%= f.label :password_confirmation, "Confirm new password", class: "text-sm font-medium text-slate-900" %>
+          <div class="relative mt-2">
+            <%= f.password_field :password_confirmation,
+              autocomplete: "new-password",
+              placeholder: "Repeat the new password",
+              required: true,
+              data: {
+                password_visibility_target: "input",
+                form_validation_target: "field",
+                form_validation_required_message: "Password confirmation is required.",
+                form_validation_match_field_id: "user_password",
+                form_validation_match_message: "Password confirmation must match the password.",
+              },
+              class: "w-full h-[35px] rounded-md border border-slate-300 px-4 pr-10 text-sm outline-none focus:border-primary" %>
+            <button type="button"
+                    class="absolute inset-y-0 right-0 flex items-center px-3 text-slate-400 transition hover:text-primary focus:text-primary focus:outline-none"
+                    aria-label="Show password"
+                    aria-pressed="false"
+                    data-password-visibility-input-id="user_password_confirmation"
+                    data-action="password-visibility#toggle">
+              <svg data-password-visibility-icon="show" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" class="h-4 w-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.964-7.178Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
+              <svg data-password-visibility-icon="hide" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" class="hidden h-4 w-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.58 10.58a2 2 0 1 0 2.83 2.83" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.88 5.09A10.94 10.94 0 0 1 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639a11.053 11.053 0 0 1-4.306 5.37M6.228 6.228A11.053 11.053 0 0 0 2.037 11.68a1.012 1.012 0 0 0 0 .639C3.423 16.49 7.36 19.5 12 19.5a10.97 10.97 0 0 0 4.132-.804" />
+              </svg>
+            </button>
+          </div>
         </div>
-        <!-- Show Password Toggle -->
-        <label class="flex items-center gap-3 text-sm text-slate-600">
-          <input
-            type="checkbox"
-            class="h-4 w-4 rounded border-slate-300 text-[#44652d] focus:ring-[#44652d]/20"
-            data-action="password-visibility#toggle"
-          >
-            <span data-password-visibility-target="toggleLabel">
-              Show password
-            </span>
-          </label>
-          <!-- Submit -->
-          <%= f.submit "Change my password",
-              class: "mt-2 inline-flex w-full h-[35px] items-center justify-center rounded-md bg-primary px-4 text-sm font-semibold text-white transition hover:bg-secondary focus:outline-none focus:ring-4 focus:ring-[#44652d]/20" %>
-        <% end %>
-        <!-- Login Link -->
-        <div class="mt-8 text-center text-sm text-slate-600">
-          Remembered your password?
-          <%= link_to "Login",
-              new_session_path(resource_name),
-              class: "font-semibold text-primary hover:text-secondary" %>
-        </div>
+
+        <%= f.submit "Change my password",
+          class: "mt-2 inline-flex w-full h-[35px] items-center justify-center rounded-md bg-primary px-4 text-sm font-semibold text-white transition hover:bg-secondary focus:outline-none focus:ring-4 focus:ring-[#44652d]/20" %>
+      <% end %>
+
+      <%# Login link %>
+      <div class="mt-8 text-center text-sm text-slate-600">
+        Remembered your password?
+        <%= link_to "Login", new_session_path(resource_name), class: "font-semibold text-primary hover:text-secondary" %>
       </div>
     </div>
-  </section>
+  </div>
+</section>

@@ -22,6 +22,7 @@ RSpec.describe 'Auth frontend validation', type: :request do
       expect(response.body).to include('minlength="6"')
       expect(response.body).to include('name="user[password_confirmation]"')
       expect(response.body).to include('data-form-validation-match-field-id="user_password"')
+      expect(response.body).to include('data-action="password-visibility#toggle"')
     end
   end
 
@@ -54,6 +55,7 @@ RSpec.describe 'Auth frontend validation', type: :request do
       expect(response.body).to include('name="user[email]"')
       expect(response.body).to include('required="required"')
       expect(response.body).to include('name="user[password]"')
+      expect(response.body).to include('data-password-visibility-input-id="user_password"')
     end
   end
 

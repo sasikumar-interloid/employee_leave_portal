@@ -1,5 +1,5 @@
 <% if resource.errors.any? %>
-  <div id="error_explanation" class="rounded-md border border-rose-200 bg-rose-50 px-2 py-1 text-sm text-rose-900" data-controller="auto-dismiss" data-auto-dismiss-delay-value="4000" data-turbo-temporary>
+  <div id="error_explanation" class="rounded-md border border-rose-200 bg-rose-50 px-2 py-2 text-sm text-rose-900" data-controller="auto-dismiss" data-auto-dismiss-delay-value="4000" data-turbo-temporary>
     <ul class="mt-2 space-y-1 pl-2 text-sm">
       <% resource.errors.full_messages.each do |message| %>
         <li><%= message %></li>

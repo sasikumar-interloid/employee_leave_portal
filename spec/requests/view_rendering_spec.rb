@@ -9,13 +9,13 @@ RSpec.describe 'View rendering', type: :request do
 
   describe 'dashboard' do
     it 'redirects guests to sign in' do
-      get dashboard_index_path
+      get dashboard_path
       expect(response).to redirect_to(new_user_session_path)
     end
 
     it 'renders welcome message for signed in users' do
       sign_in_as(user)
-      get dashboard_index_path
+      get dashboard_path
 
       expect(response).to have_http_status(:success)
       expect(response.body).to include('Welcome to Dashboard')
@@ -54,6 +54,7 @@ RSpec.describe 'View rendering', type: :request do
       expect(response.body).to include('Forgot password?')
       expect(response.body).to include("href=\"#{new_user_registration_path}\"")
       expect(response.body).to include('Sign up')
+      expect(response.body).to include('aria-label="Show password"')
       expect(response.body).not_to include('<footer')
     end
   end
@@ -67,6 +68,7 @@ RSpec.describe 'View rendering', type: :request do
       expect(response.body).to include('Create your account')
       expect(response.body).to include('name="user[password_confirmation]"')
       expect(response.body).to include('Confirm your password')
+      expect(response.body).to include('data-password-visibility-input-id="user_password_confirmation"')
       expect(response.body).to include("href=\"#{new_user_session_path}\"")
       expect(response.body).to include('Login')
       expect(response.body).not_to include('<footer')

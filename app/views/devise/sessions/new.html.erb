@@ -1,20 +1,22 @@
 <% content_for :title, "Login" %>
 <% content_for :full_width_auth, true %>
 <% content_for :hide_footer, true %>
-<section class="mx-auto sm:w-[75%] w-full rounded-md bg-white shadow-[0_5px_80px_rgba(15,23,42,0.09)] lg:grid">
+
+<section class="mx-auto w-full sm:w-[75%] rounded-md bg-white shadow-[0_5px_80px_rgba(15,23,42,0.09)] lg:grid">
   <div class="flex flex-col lg:flex-row lg:items-center">
 
-    <!-- Left Section -->
+    <%# Left side: login form %>
     <div class="w-full p-6 md:p-8 lg:w-1/2">
       <h1 class="font-semibold text-2xl text-center mt-4">Welcome back</h1>
-      <p class="mt-4 text-sm leading-7 lx:leading-2">Sign in to continue managing leave requests, balances, and approvals.</p>
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "mt-4 space-y-6", 
+      <p class="mt-4 text-sm leading-7">Sign in to continue managing leave requests, balances, and approvals.</p>
+
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "mt-4 space-y-6",
           data: { controller: "password-visibility form-validation", action: "submit->form-validation#validateForm focusout->form-validation#validateField input->form-validation#validateField" } }) do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
-        <div>
-          <%= f.label :email, "Email address",
-            class: "text-sm" %>
 
+        <%# Email %>
+        <div>
+          <%= f.label :email, "Email address", class: "text-sm" %>
           <%= f.email_field :email,
             autofocus: true,
             autocomplete: "email",
@@ -22,52 +24,77 @@
             required: true,
             data: {
               form_validation_target: "field",
-              form_validation_required_message: "Email address is required."
+              form_validation_required_message: "Email address is required.",
             },
             class: "mt-2 w-full h-[35px] rounded-sm border border-slate-300 px-4 text-xs outline-none transition focus:border-primary" %>
         </div>
+
+        <%# Password %>
         <div>
           <div class="flex items-center justify-between gap-4">
-            <%= f.label :password,
-              class: "text-sm font-medium text-slate-900" %>
-
-            <%= link_to "Forgot password?",
-              new_password_path(resource_name),
-              class: "text-sm font-medium text-primary hover:text-secondary" %>
+            <%= f.label :password, class: "text-sm font-medium text-slate-900" %>
+            <%= link_to "Forgot password?", new_password_path(resource_name), class: "text-sm font-medium text-primary hover:text-secondary hover:underline" %>
           </div>
-          <%= f.password_field :password,placeholder:"Enter your password",autocomplete: "current-password",
-          required: true,minlength: @minimum_password_length || Devise.password_length.min,pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).+",
-          title: "Must include uppercase, lowercase, number, and special character.",
-          data: { password_visibility_target: "input", form_validation_target: "field", form_validation_required_message: "Password is required.", 
-          form_validation_pattern_message: "Password must include uppercase, lowercase, number, and special character." },
-          class: "mt-2 w-full h-[35px] rounded-sm border border-slate-300 px-4 text-xs text-slate-900 outline-none transition focus:border-primary" %>
+          <div class="relative mt-2">
+            <%= f.password_field :password,
+              placeholder: "Enter your password",
+              autocomplete: "current-password",
+              required: true,
+              minlength: @minimum_password_length || Devise.password_length.min,
+              pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).+",
+              title: "Must include uppercase, lowercase, number, and special character.",
+              data: {
+                password_visibility_target: "input",
+                form_validation_target: "field",
+                form_validation_required_message: "Password is required.",
+                form_validation_pattern_message: "Password must include uppercase, lowercase, number, and special character.",
+              },
+              class: "w-full h-[35px] rounded-sm border border-slate-300 px-4 pr-10 text-xs text-slate-900 outline-none transition focus:border-primary" %>
+            <button type="button"
+                    class="absolute inset-y-0 right-0 flex items-center px-3 text-slate-400 transition hover:text-primary focus:text-primary focus:outline-none"
+                    aria-label="Show password"
+                    aria-pressed="false"
+                    data-password-visibility-input-id="user_password"
+                    data-action="password-visibility#toggle">
+              <svg data-password-visibility-icon="show" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" class="h-4 w-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.964-7.178Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
+              <svg data-password-visibility-icon="hide" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" class="hidden h-4 w-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.58 10.58a2 2 0 1 0 2.83 2.83" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.88 5.09A10.94 10.94 0 0 1 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639a11.053 11.053 0 0 1-4.306 5.37M6.228 6.228A11.053 11.053 0 0 0 2.037 11.68a1.012 1.012 0 0 0 0 .639C3.423 16.49 7.36 19.5 12 19.5a10.97 10.97 0 0 0 4.132-.804" />
+              </svg>
+            </button>
+          </div>
         </div>
+
+        <%# Remember me %>
         <div class="flex flex-col sm:flex-row gap-2 md:gap-2">
-          <label class="flex items-center gap-3 text-sm ">
-            <input type="checkbox"class="h-3 w-3 rounded"data-action="password-visibility#toggle">
-            <span data-password-visibility-target="toggleLabel">Show password</span>
-          </label>
           <% if devise_mapping.rememberable? %>
             <label class="ml-0 flex items-center gap-3 text-sm">
-              <%= f.check_box :remember_me,
-                class: "h-3 w-3 rounded" %>
+              <%= f.check_box :remember_me, class: "h-3 w-3 rounded" %>
               <span>Remember me</span>
             </label>
           <% end %>
         </div>
-        <div>
-          <%= f.submit "Login",
+
+        <%= f.submit "Login",
           class: "w-full h-[35px] rounded-sm bg-primary text-sm font-semibold text-white transition hover:bg-secondary focus:outline-none" %>
+      <% end %>
+
+      <%# Sign up link %>
+      <div class="mt-8 text-center text-sm text-slate-600 flex flex-col gap-2 sm:flex-row sm:justify-center">
+        <% if devise_mapping.registerable? %>
+          Don't have an account?
+          <%= link_to "Sign up", new_registration_path(resource_name), class: "font-semibold text-primary hover:text-secondary" %>
         <% end %>
-        <div class="mt-8 text-center text-sm text-slate-600 flex flex-col gap-2 sm:flex-row sm:justify-center">
-          <% if devise_mapping.registerable? %>
-            Don't have an account?
-            <%= link_to "Sign up", new_registration_path(resource_name), class: "font-semibold text-primary hover:text-secondary" %>
-          <% end %>
-        </div>
       </div>
     </div>
+
+    <%# Right side: image %>
     <div class="lg:flex lg:w-1/2 lg:items-center lg:justify-center lg:p-4 hidden">
       <%= image_tag "login.svg", alt: "Login image", class: "h-auto w-full max-w-md" %>
     </div>
-  </section>
+  </div>
+</section>

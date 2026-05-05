@@ -1,22 +1,42 @@
 class User < ApplicationRecord
-  PASSWORD_FORMAT = /\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).+\z/
+  # -- Constants -------------------------------------------------------------
+  PASSWORD_FORMAT = /\A
+    (?=.*[a-z])          # lowercase
+    (?=.*[A-Z])          # uppercase
+    (?=.*\d)             # digit
+    (?=.*[^A-Za-z0-9])   # special character
+    .+
+  \z/x
 
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :lockable, :confirmable
+  # -- Devise ----------------------------------------------------------------
+  devise :database_authenticatable,
+         :registerable,
+         :recoverable,
+         :rememberable,
+         :lockable,
+         :confirmable
 
-  validates :email, presence: true, uniqueness: true
-  validates :encrypted_password, presence: true
+  # -- Validations -----------------------------------------------------------
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
+
   validates :password,
-    format: {
-      with: PASSWORD_FORMAT,
-      message: "must include at least one uppercase letter, one lowercase letter, one number, and one special character"
-    },
-    allow_blank: true
+            format: {
+              with: PASSWORD_FORMAT,
+              message: "must include at least one uppercase letter, one lowercase letter, one number, and one special character"
+            },
+            allow_blank: true
 
-  after_create_commit :send_welcome_email
+  # -- Callbacks -------------------------------------------------------------
+  after_commit :send_welcome_email, on: :create
+
+  # -- Public Methods --------------------------------------------------------
+  def initials
+    email.first.upcase
+  end
 
   private
 
   def send_welcome_email
-    UserMailer.welcome_email(self).deliver_now
+    UserMailer.with(user: self).welcome_email.deliver_later
   end
 end

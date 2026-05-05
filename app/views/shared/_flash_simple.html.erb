@@ -1,0 +1,21 @@
+<% if notice.present? %>
+  <div class="pointer-events-auto rounded-md border border-green-100 bg-green-50 p-4 text-sm shadow-sm"
+       role="alert"
+       data-controller="auto-dismiss"
+       data-auto-dismiss-delay-value="4000">
+    <p class="font-medium text-green-900">
+      <%= notice %>
+    </p>
+  </div>
+<% end %>
+
+<% if alert.present? %>
+  <div class="pointer-events-auto rounded-md border border-yellow-100 bg-red-50 p-4 text-sm shadow-sm"
+       role="alert"
+       data-controller="auto-dismiss"
+       data-auto-dismiss-delay-value="4000">
+    <p class="font-medium text-red-700">
+      <%= alert %>
+    </p>
+  </div>
+<% end %>

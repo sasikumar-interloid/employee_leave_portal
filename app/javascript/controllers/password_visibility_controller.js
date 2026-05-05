@@ -1,17 +1,25 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["input", "toggleLabel"]
+  static targets = ["input"]
 
   toggle(event) {
-    const visible = event.currentTarget.checked
+    const button = event.currentTarget
+    const inputId = button.dataset.passwordVisibilityInputId
+    const input = this.inputTargets.find((field) => field.id === inputId)
 
-    this.inputTargets.forEach((input) => {
-      input.type = visible ? "text" : "password"
-    })
+    if (!input) return
 
-    if (this.hasToggleLabelTarget) {
-      this.toggleLabelTarget.textContent = visible ? "Hide password" : "Show password"
-    }
+    const visible = input.type === "password"
+
+    input.type = visible ? "text" : "password"
+    button.setAttribute("aria-label", visible ? "Hide password" : "Show password")
+    button.setAttribute("aria-pressed", visible ? "true" : "false")
+
+    const showIcon = button.querySelector('[data-password-visibility-icon="show"]')
+    const hideIcon = button.querySelector('[data-password-visibility-icon="hide"]')
+
+    showIcon?.classList.toggle("hidden", visible)
+    hideIcon?.classList.toggle("hidden", !visible)
   }
 }

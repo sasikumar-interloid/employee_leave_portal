@@ -59,7 +59,7 @@ group :development do
   gem "web-console"
   gem 'traceroute', '~> 0.8.1'
   gem 'bullet', '~> 8.1', '>= 8.1.1'
-  gem 'robocop', '~> 0.1.1'
+  gem 'rubocop', '~> 1.86', '>= 1.86.1'
   gem 'rack-mini-profiler', '~> 4.0', '>= 4.0.1'
   gem 'rubycritic', '~> 5.0'
 end
