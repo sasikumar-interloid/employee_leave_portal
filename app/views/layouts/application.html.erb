@@ -3,49 +3,91 @@
   <head>
     <title><%= content_for(:title) || "Employee Leave Portal" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Employee Leave Portal">
-    <meta name="mobile-web-app-capable" content="yes">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+    <%= favicon_link_tag "favicon.png" %>
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-stone-100 text-slate-900 antialiased" style="background-image: radial-gradient(circle at top, rgba(20, 184, 166, 0.16), transparent 34%), linear-gradient(180deg, #fffdf8 0%, #f3f4f6 100%);">
-    <div class="relative isolate min-h-screen overflow-hidden">
-      <div class="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.08),_transparent_65%)]"></div>
-      <div class="pointer-events-none absolute -left-16 top-24 h-56 w-56 rounded-full bg-amber-200/40 blur-3xl"></div>
-      <div class="pointer-events-none absolute -right-10 bottom-16 h-64 w-64 rounded-full bg-teal-200/50 blur-3xl"></div>
+  <body>
 
-      <div class="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 py-6 sm:px-6 lg:px-8">
-        <% if notice.present? || alert.present? %>
-          <div class="mx-auto w-full max-w-2xl space-y-3 pt-2">
-            <% if notice.present? %>
-              <p class="rounded-2xl border border-emerald-200 bg-emerald-50/90 px-4 py-3 text-sm font-medium text-emerald-900 shadow-sm backdrop-blur"><%= notice %></p>
-            <% end %>
+    <div class="mx-auto flex min-h-screen max-w-6xl flex-col px-4 py-6">
 
-            <% if alert.present? %>
-              <p class="rounded-2xl border border-rose-200 bg-rose-50/90 px-4 py-3 text-sm font-medium text-rose-900 shadow-sm backdrop-blur"><%= alert %></p>
-            <% end %>
+      <% if notice.present? || alert.present? %>
+        <div class="pointer-events-none fixed right-4 top-4 z-50 flex w-full max-w-sm flex-col gap-3 sm:right-6 sm:top-6">
+          <% if notice.present? %>
+            <div class="pointer-events-auto rounded-md border border-green-100 bg-green-50 p-4 text-sm shadow-sm"
+                role="alert"
+                data-controller="auto-dismiss"
+                data-auto-dismiss-delay-value="4000">
+                <div class="flex items-center gap-2.5 font-medium text-green-900">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="size-[18px] fill-current overflow-visible" viewBox="0 0 330 330"
+                      aria-hidden="true">
+                      <path
+                        d="M165 0C74.019 0 0 74.019 0 165s74.019 165 165 165 165-74.019 165-165S255.981 0 165 0m0 300c-74.44 0-135-60.561-135-135S90.56 30 165 30s135 60.561 135 135-60.561 135-135 135"
+                        data-original="#000000" />
+                      <path
+                        d="m226.872 106.664-84.854 84.853-38.89-38.891c-5.857-5.857-15.355-5.858-21.213-.001-5.858 5.858-5.858 15.355 0 21.213l49.496 49.498a15 15 0 0 0 10.606 4.394h.001c3.978 0 7.793-1.581 10.606-4.393l95.461-95.459c5.858-5.858 5.858-15.355 0-21.213s-15.355-5.859-21.213-.001"
+                        data-original="#000000" />
+                  </svg>
+                  <p><%= notice %></p>
+                </div>
+            </div>
+          <% end %>
+
+          
+          <% if alert.present? %>
+            <div class="pointer-events-auto rounded-md border border-red-100 bg-red-50 p-4 text-sm shadow-sm"
+                role="alert"
+                data-controller="auto-dismiss"
+                data-auto-dismiss-delay-value="4000">
+                <div class="flex items-center gap-2.5 font-medium text-red-700">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="size-[18px] fill-current overflow-visible" viewBox="0 0 512 512"
+                      aria-hidden="true">
+                      <path
+                        d="M256 0C114.508 0 0 114.497 0 256c0 141.493 114.497 256 256 256 141.492 0 256-114.497 256-256C512 114.507 397.503 0 256 0m0 472c-119.384 0-216-96.607-216-216 0-119.385 96.607-216 216-216 119.384 0 216 96.607 216 216 0 119.385-96.607 216-216 216"
+                        data-original="#000000" />
+                      <path
+                        d="M343.586 315.302 284.284 256l59.302-59.302c7.81-7.81 7.811-20.473.001-28.284-7.812-7.811-20.475-7.81-28.284 0L256 227.716l-59.303-59.302c-7.809-7.811-20.474-7.811-28.284 0s-7.81 20.474.001 28.284L227.716 256l-59.302 59.302c-7.811 7.811-7.812 20.474-.001 28.284 7.813 7.812 20.476 7.809 28.284 0L256 284.284l59.303 59.302c7.808 7.81 20.473 7.811 28.284 0s7.81-20.474-.001-28.284"
+                        data-original="#000000" />
+                  </svg>
+                  <p><%= alert %></p>
+                </div>
+            </div>
+          <% end %>
+
+        </div>
+      <% end %>
+  
+
+      <main class="flex flex-1 items-center justify-center">
+        
+        <% if content_for?(:full_width_auth) %>
+          <div class="w-full max-w-7xl">
+            <%= yield %>
+          </div>
+        <% else %>
+          <div class="w-full max-w-md rounded-md p-6 sm:p-8">
+            <%= yield %>
           </div>
         <% end %>
+      </main>
 
-        <main class="flex flex-1 items-center justify-center py-10">
-          <%= yield %>
-        </main>
-      </div>
+      <% unless content_for?(:hide_footer) %>
+        <footer class="mt-6 text-center text-xs text-slate-500">
+          © <%= Time.current.year %> Employee Leave Portal
+        </footer>
+      <% end %>
+
     </div>
+
   </body>
 </html>

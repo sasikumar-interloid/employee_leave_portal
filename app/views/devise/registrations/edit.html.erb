@@ -1,67 +1,52 @@
 <% content_for :title, "Edit Account" %>
-
-<% card_content = capture do %>
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "mt-8 space-y-5" }) do |f| %>
-    <%= render "devise/shared/error_messages", resource: resource %>
-
-    <div>
-      <%= f.label :email, class: "text-sm font-semibold text-slate-700" %>
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "mt-2 block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-teal-600 focus:ring-4 focus:ring-teal-600/15", placeholder: "you@company.com" %>
-    </div>
-
-    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <div class="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-        Confirmation pending for <span class="font-semibold"><%= resource.unconfirmed_email %></span>.
-      </div>
-    <% end %>
-
-    <div>
-      <%= f.label :password, class: "text-sm font-semibold text-slate-700" %>
-      <%= f.password_field :password, autocomplete: "new-password", class: "mt-2 block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-teal-600 focus:ring-4 focus:ring-teal-600/15", placeholder: "Leave blank to keep your current password" %>
-      <p class="mt-2 text-xs leading-6 text-slate-500">Leave this empty if you do not want to change it.</p>
-      <% if @minimum_password_length %>
-        <p class="mt-2 text-xs leading-6 text-slate-500"><%= @minimum_password_length %> characters minimum.</p>
+<% content_for :full_width_auth, true %>
+<% content_for :hide_footer, true %>
+<section class="mx-auto w-full 2xl:w-[50%] xl:w-[50%] lg:w-[50%] md:w-[50%] sm:w-[70%] overflow-hidden rounded-md bg-white shadow-xl">
+  <div class="flex items-center px-3 py-4 sm:px-4 lg:px-6 lg:py-6">
+    <div class="mx-auto w-full">
+      <h1 class="text-lg font-semibold tracking-tight sm:text-lg text-center">Manage your account</h1>
+      <p class="mt-4 text-sm leading-7 text-center">Update your email or password and keep your access details current.</p>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "mt-10 space-y-6", 
+          data: { controller: "password-visibility form-validation", action: "submit->form-validation#validateForm focusout->form-validation#validateField input->form-validation#validateField" } }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+        <div>
+          <%= f.label :email, "Email address", class: "text-sm font-medium" %>
+          <%= f.email_field :email,autofocus: true,autocomplete: "email",placeholder: "Enter your email",
+          required: true,data: { form_validation_target: "field", form_validation_required_message: "Email address is required." },
+          class: "mt-2 w-full h-[35px] rounded-md border border-slate-300 px-4 text-sm  outline-none transition focus:border-primary" %>
+        </div>
+        <div>
+          <%= f.label :current_password, "Current password", class: "text-sm font-medium " %>
+          <%= f.password_field :current_password,autocomplete: "current-password",placeholder: "Enter your current password to save changes",
+          required: true,data: { password_visibility_target: "input", form_validation_target: "field", form_validation_required_message: "Current password is required to save changes." },
+          class: "mt-2 w-full h-[35px] rounded-md border border-slate-300 px-4 text-sm  outline-none transition  focus:border-primary" %>
+        </div>
+        <div>
+          <%= f.label :password, "New password", class: "text-sm font-medium " %>
+          <%= f.password_field :password,autocomplete: "new-password",placeholder: "Leave blank to keep your current password",
+          minlength: @minimum_password_length || Devise.password_length.min,pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).+",
+          title: "Must include uppercase, lowercase, number, and special character.",data: { password_visibility_target: "input", form_validation_target: "field", 
+          form_validation_pattern_message: "Password must include uppercase, lowercase, number, and special character." },
+          class: "mt-2 w-full h-[35px] rounded-md border border-slate-300 px-4 text-sm  outline-none transition  focus:border-primary" %>
+        </div>
+        <div>
+          <%= f.label :password_confirmation, "Confirm new password", class: "text-sm font-medium " %>
+          <%= f.password_field :password_confirmation,autocomplete: "new-password",placeholder: "Repeat the new password",data: { password_visibility_target: "input",
+          form_validation_target: "field", form_validation_required_if_field_id: "user_password", form_validation_required_message: "Password confirmation is required when setting a new password.", 
+          form_validation_match_field_id: "user_password", form_validation_match_message: "Password confirmation must match the new password." },
+          class: "mt-2 w-full h-[35px] rounded-md border border-slate-300 px-4 text-sm  outline-none transition  focus:border-primary" %>
+        </div>
+        <label class="flex items-center gap-3 text-sm">
+          <input type="checkbox"class="h-4 w-4 rounded border-slate-300 text-[#44652d] focus:ring-[#44652d]/20"data-action="password-visibility#toggle">
+          <span data-password-visibility-target="toggleLabel">Show password</span>
+        </label>
+        <%= f.submit "Save changes", 
+        class: "mt-2 inline-flex w-full h-[35px] items-center justify-center rounded-md bg-primary px-4 text-sm font-semibold text-white transition hover:bg-secondary" %>
       <% end %>
+      <%= button_to "Logout", destroy_user_session_path, method: :delete,
+        form: { data: { turbo: false } },
+        class: "w-full h-[35px] mt-4 rounded-md border bg-red-700 text-sm font-semibold text-white transition hover:bg-red-800 focus:outline-none" %>
     </div>
-
-    <div>
-      <%= f.label :password_confirmation, class: "text-sm font-semibold text-slate-700" %>
-      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "mt-2 block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-teal-600 focus:ring-4 focus:ring-teal-600/15", placeholder: "Repeat the new password" %>
-    </div>
-
-    <div>
-      <%= f.label :current_password, class: "text-sm font-semibold text-slate-700" %>
-      <%= f.password_field :current_password, autocomplete: "current-password", class: "mt-2 block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-teal-600 focus:ring-4 focus:ring-teal-600/15", placeholder: "Enter your current password to save changes" %>
-      <p class="mt-2 text-xs leading-6 text-slate-500">Your current password is required to confirm profile updates.</p>
-    </div>
-
-    <div>
-      <%= f.submit "Save changes", class: "inline-flex w-full items-center justify-center rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-900/15" %>
-    </div>
-  <% end %>
-
-  <div class="my-8 border-t border-slate-200"></div>
-
-  <div class="space-y-4">
-    <div class="space-y-1">
-      <h3 class="text-lg font-semibold text-slate-900">Close account</h3>
-      <p class="text-sm leading-6 text-slate-600">If you no longer need access, you can permanently remove your account.</p>
-    </div>
-
-    <%= button_to "Cancel my account",
-                  registration_path(resource_name),
-                  method: :delete,
-                  class: "inline-flex items-center justify-center rounded-2xl bg-rose-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-rose-700 focus:outline-none focus:ring-4 focus:ring-rose-600/20",
-                  data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" } %>
-
-    <%= link_to "Back", (request.referer.presence || new_session_path(resource_name)), class: "text-sm font-medium text-slate-600 transition hover:text-slate-900" %>
   </div>
-<% end %>
-
-<%= render "devise/shared/auth_frame",
-           eyebrow: "Account settings",
-           title: "Manage your account",
-           description: "Update your email or password and keep your access details current.",
-           aside_title: "Keep your profile secure and current.",
-           aside_body: "Account settings stay in the same workflow as leave management, so employees always know where to update credentials and contact details.",
-           card_content: card_content %>
+</div>
+</section>
