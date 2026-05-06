@@ -81,22 +81,30 @@ export default class extends Controller {
 
   showError(field, message) {
     let error = this.errorElementFor(field)
+    const wrapper = this.passwordFieldWrapperFor(field)
 
     if (!error) {
       error = document.createElement("p")
       error.id = `${field.id}-error`
       error.className = "mt-2 text-xs text-rose-600"
-      field.insertAdjacentElement("afterend", error)
+      this.errorAnchorFor(field).insertAdjacentElement("afterend", error)
     }
 
     error.textContent = message
     field.setAttribute("aria-invalid", "true")
     field.setAttribute("aria-describedby", error.id)
-    field.classList.add("border-rose-500", "focus:border-rose-500")
+    field.classList.add("focus:ring-0")
+
+    if (wrapper) {
+      wrapper.classList.add("border-rose-500", "focus-within:border-rose-500")
+    } else {
+      field.classList.add("border-rose-500", "focus:border-rose-500")
+    }
   }
 
   clearError(field) {
     const error = this.errorElementFor(field)
+    const wrapper = this.passwordFieldWrapperFor(field)
 
     if (error) {
       error.remove()
@@ -104,10 +112,34 @@ export default class extends Controller {
 
     field.removeAttribute("aria-invalid")
     field.removeAttribute("aria-describedby")
-    field.classList.remove("border-rose-500", "focus:border-rose-500")
+    field.classList.remove("border-rose-500", "focus:border-rose-500", "focus:ring-0")
+
+    if (wrapper) {
+      wrapper.classList.remove("border-rose-500", "focus-within:border-rose-500")
+    }
   }
 
   errorElementFor(field) {
     return this.element.querySelector(`#${field.id}-error`)
+  }
+
+  errorAnchorFor(field) {
+    const wrapper = this.passwordFieldWrapperFor(field)
+
+    if (wrapper) {
+      return wrapper
+    }
+
+    return field
+  }
+
+  passwordFieldWrapperFor(field) {
+    const wrapper = field.parentElement
+
+    if (wrapper?.dataset.passwordFieldWrapper === "true" && wrapper.querySelector(`[data-password-visibility-input-id="${field.id}"]`)) {
+      return wrapper
+    }
+
+    return null
   }
 }

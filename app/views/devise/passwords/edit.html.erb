@@ -13,24 +13,24 @@
         <%# New password %>
         <div>
           <%= f.label :password, "New password", class: "text-sm font-medium" %>
-          <div class="relative mt-2">
+          <div class="mt-2 flex h-[35px] items-center rounded-md border border-slate-300 transition focus-within:border-primary"
+               data-password-field-wrapper="true">
             <%= f.password_field :password,
               autofocus: true,
               autocomplete: "new-password",
               placeholder: "Create a new password",
               required: true,
               minlength: @minimum_password_length || Devise.password_length.min,
-              pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).+",
-              title: "Must include uppercase, lowercase, number, and special character.",
-              data: {
+               pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).+",
+               data: {
                 password_visibility_target: "input",
                 form_validation_target: "field",
                 form_validation_required_message: "New password is required.",
                 form_validation_pattern_message: "Password must include uppercase, lowercase, number, and special character.",
               },
-              class: "w-full h-[35px] rounded-md border border-slate-300 px-4 pr-10 text-sm outline-none focus:border-primary" %>
+              class: "h-full min-w-0 flex-1 border-0 bg-transparent px-4 text-sm outline-none focus:ring-0" %>
             <button type="button"
-                    class="absolute inset-y-0 right-0 flex items-center px-3 text-slate-400 transition hover:text-primary focus:text-primary focus:outline-none"
+                    class="flex h-full shrink-0 items-center px-3 text-slate-400 transition hover:text-primary focus:text-primary focus:outline-none"
                     aria-label="Show password"
                     aria-pressed="false"
                     data-password-visibility-input-id="user_password"
@@ -53,7 +53,8 @@
         <%# Confirm password %>
         <div>
           <%= f.label :password_confirmation, "Confirm new password", class: "text-sm font-medium text-slate-900" %>
-          <div class="relative mt-2">
+          <div class="mt-2 flex h-[35px] items-center rounded-md border border-slate-300 transition focus-within:border-primary"
+               data-password-field-wrapper="true">
             <%= f.password_field :password_confirmation,
               autocomplete: "new-password",
               placeholder: "Repeat the new password",
@@ -65,9 +66,9 @@
                 form_validation_match_field_id: "user_password",
                 form_validation_match_message: "Password confirmation must match the password.",
               },
-              class: "w-full h-[35px] rounded-md border border-slate-300 px-4 pr-10 text-sm outline-none focus:border-primary" %>
+              class: "h-full min-w-0 flex-1 border-0 bg-transparent px-4 text-sm outline-none focus:ring-0" %>
             <button type="button"
-                    class="absolute inset-y-0 right-0 flex items-center px-3 text-slate-400 transition hover:text-primary focus:text-primary focus:outline-none"
+                    class="flex h-full shrink-0 items-center px-3 text-slate-400 transition hover:text-primary focus:text-primary focus:outline-none"
                     aria-label="Show password"
                     aria-pressed="false"
                     data-password-visibility-input-id="user_password_confirmation"

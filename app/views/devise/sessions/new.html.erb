@@ -30,23 +30,23 @@
             <%= f.label :password, class: "text-sm font-medium text-slate-900" %>
             <%= link_to "Forgot password?", new_password_path(resource_name), class: "text-sm font-medium text-primary hover:text-secondary hover:underline" %>
           </div>
-          <div class="relative mt-2">
+          <div class="mt-2 flex h-[35px] items-center rounded-sm border border-slate-300 transition focus-within:border-primary"
+               data-password-field-wrapper="true">
             <%= f.password_field :password,
               placeholder: "Enter your password",
               autocomplete: "current-password",
               required: true,
               minlength: @minimum_password_length || Devise.password_length.min,
-              pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).+",
-              title: "Must include uppercase, lowercase, number, and special character.",
-              data: {
+               pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).+",
+               data: {
                 password_visibility_target: "input",
                 form_validation_target: "field",
                 form_validation_required_message: "Password is required.",
                 form_validation_pattern_message: "Password must include uppercase, lowercase, number, and special character.",
               },
-              class: "w-full h-[35px] rounded-sm border border-slate-300 px-4 pr-10 text-xs text-slate-900 outline-none transition focus:border-primary" %>
+              class: "h-full min-w-0 flex-1 border-0 bg-transparent px-4 text-xs text-slate-900 outline-none focus:ring-0" %>
             <button type="button"
-                    class="absolute inset-y-0 right-0 flex items-center px-3 text-slate-400 transition hover:text-primary focus:text-primary focus:outline-none"
+                    class="flex h-full shrink-0 items-center px-3 text-slate-400 transition hover:text-primary focus:text-primary focus:outline-none"
                     aria-label="Show password"
                     aria-pressed="false"
                     data-password-visibility-input-id="user_password"
